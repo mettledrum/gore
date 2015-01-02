@@ -287,7 +287,7 @@ func (s *Sentinel) getInstanceFromMessage(message *Message) *instance {
 	return nil
 }
 
-func (s *Sentinel) getInstanceAddress(name string) string {
+func (s *Sentinel) GetInstanceAddress(name string) string {
 	for {
 		rep, err := NewCommand("SENTINEL", "get-master-addr-by-name", name).Run(s.conn)
 		if err != nil {
@@ -344,7 +344,7 @@ func (ins *instance) up(message *Message) {
 }
 
 func (ins *instance) switchMaster(s *Sentinel) {
-	address := s.getInstanceAddress(ins.name)
+	address := s.GetInstanceAddress(ins.name)
 	if address == "" {
 		// WTF
 		return
